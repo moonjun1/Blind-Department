@@ -39,8 +39,20 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 // 요청에 대한 인가 설정
                 .authorizeHttpRequests(auth -> auth
+                        // Swagger UI 관련 경로 허용
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**")
+                        .permitAll()
+                        // 회원가입, 로그인은 누구나 접근 가능
                         .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
+                        // 학생증 인증은 인증된 사용자만 가능
                         .requestMatchers("/api/users/verify-department/ocr").authenticated()
+                        // 그 외 모든 요청은 인증 필요
                         .anyRequest().authenticated()
                 )
                 // JWT 필터 추가
