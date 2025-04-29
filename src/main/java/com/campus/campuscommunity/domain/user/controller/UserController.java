@@ -1,6 +1,7 @@
 package com.campus.campuscommunity.domain.user.controller;
 
 import com.campus.campuscommunity.common.response.ApiResponse;
+import com.campus.campuscommunity.common.response.ResponseCode;
 import com.campus.campuscommunity.domain.user.dto.UserRequestDto;
 import com.campus.campuscommunity.domain.user.dto.UserResponseDto;
 import com.campus.campuscommunity.domain.user.service.UserService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/users")
@@ -71,11 +73,17 @@ public class UserController {
      * 학과 인증 API (OCR 로직은 나중에 구현)
      * POST /api/users/verify-department
      */
-    @PostMapping("/verify-department")
-    public ResponseEntity<ApiResponse<UserResponseDto.UserInfo>> verifyDepartment(
-            @RequestParam String email) {
+    @PostMapping("/verify-department/ocr")
+    public ResponseEntity<ApiResponse<UserResponseDto.UserInfo>> verifyDepartmentWithOcr(
+            @RequestParam("email") String email,
+            @RequestParam("studentIdCard") MultipartFile studentIdCard) {
 
-        UserResponseDto.UserInfo userInfo = userService.verifyDepartment(email);
-        return ResponseEntity.ok(ApiResponse.success("학과 인증이 완료되었습니다.", userInfo));
+        try {
+            UserResponseDto.UserInfo userInfo = userService.verifyDepartmentWithOcr(email, studentIdCard);
+            return ResponseEntity.ok(ApiResponse.success("학과 인증이 완료되었습니다.", userInfo));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error(ResponseCode.BAD_REQUEST, e.getMessage()));
+        }
     }
 }

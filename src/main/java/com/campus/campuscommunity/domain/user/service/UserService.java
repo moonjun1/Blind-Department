@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service // 이 클래스가 서비스 계층임을 나타냅니다
 @RequiredArgsConstructor // final 필드에 대한 생성자를 자동 생성합니다
@@ -20,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository; // 사용자 저장소
     private final PasswordEncoder passwordEncoder; // 비밀번호 암호화 도구
     private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 도구
+    private final StudentIdVerificationService verificationService;
 
     /**
      * 회원가입 처리
@@ -152,11 +156,16 @@ public class UserService {
      * @param email 이메일
      * @return 인증된 사용자 정보
      */
-    public UserResponseDto.UserInfo verifyDepartment(String email) {
+    public UserResponseDto.UserInfo verifyDepartmentWithOcr(String email, MultipartFile studentIdCard)
+            throws IOException {
+        // 이메일로 사용자 조회
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
 
-        // 인증 상태로 변경
+        // OCR로 학생증 인증 및 학과 추출
+        String detectedDepartment = verificationService.verifyStudentIdCard(studentIdCard);
+
+        // 인증 상태 업데이트
         User verifiedUser = User.builder()
                 .id(user.getId())
                 .email(user.getEmail())
