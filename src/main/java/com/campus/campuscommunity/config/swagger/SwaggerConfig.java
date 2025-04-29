@@ -55,6 +55,7 @@ public class SwaggerConfig {
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new Components()
                         .addSecuritySchemes("Bearer Authentication", securityScheme)
+                        // 사용자 API 예시
                         .addExamples("회원가입 요청 예시",
                                 new Example()
                                         .value("{\n" +
@@ -70,6 +71,82 @@ public class SwaggerConfig {
                                                 "  \"email\": \"user@university.ac.kr\",\n" +
                                                 "  \"password\": \"password123\"\n" +
                                                 "}")
-                                        .summary("로그인 요청 예시")));
+                                        .summary("로그인 요청 예시"))
+                        // 게시판 API 예시
+                        .addExamples("게시글 작성 요청 예시",
+                                new Example()
+                                        .value("{\n" +
+                                                "  \"title\": \"첫 번째 게시글입니다\",\n" +
+                                                "  \"content\": \"안녕하세요, 블라인드 커뮤니티 기능 테스트 중입니다. 학과별로 익명성이 보장되는지 확인해봅시다.\",\n" +
+                                                "  \"category\": \"FREE\"\n" +
+                                                "}")
+                                        .summary("게시글 작성 요청 예시"))
+                        .addExamples("게시글 수정 요청 예시",
+                                new Example()
+                                        .value("{\n" +
+                                                "  \"title\": \"수정된 게시글 제목\",\n" +
+                                                "  \"content\": \"게시글 내용을 수정했습니다. 더 자세한 내용을 추가했습니다.\",\n" +
+                                                "  \"category\": \"QNA\"\n" +
+                                                "}")
+                                        .summary("게시글 수정 요청 예시"))
+                        .addExamples("게시글 목록 응답 예시",
+                                new Example()
+                                        .value("{\n" +
+                                                "  \"status\": 200,\n" +
+                                                "  \"message\": \"요청이 성공적으로 처리되었습니다.\",\n" +
+                                                "  \"data\": {\n" +
+                                                "    \"boards\": [\n" +
+                                                "      {\n" +
+                                                "        \"id\": 1,\n" +
+                                                "        \"title\": \"첫 번째 게시글입니다\",\n" +
+                                                "        \"writerDepartment\": \"컴퓨터공학과\",\n" +
+                                                "        \"category\": \"FREE\",\n" +
+                                                "        \"categoryDisplayName\": \"자유게시판\",\n" +
+                                                "        \"viewCount\": 42,\n" +
+                                                "        \"likeCount\": 15,\n" +
+                                                "        \"commentCount\": 7,\n" +
+                                                "        \"createdAt\": \"2025-04-15T14:30:00\"\n" +
+                                                "      },\n" +
+                                                "      {\n" +
+                                                "        \"id\": 2,\n" +
+                                                "        \"title\": \"스터디 모집합니다\",\n" +
+                                                "        \"writerDepartment\": \"전자공학과\",\n" +
+                                                "        \"category\": \"STUDY\",\n" +
+                                                "        \"categoryDisplayName\": \"스터디\",\n" +
+                                                "        \"viewCount\": 18,\n" +
+                                                "        \"likeCount\": 5,\n" +
+                                                "        \"commentCount\": 2,\n" +
+                                                "        \"createdAt\": \"2025-04-15T11:20:00\"\n" +
+                                                "      }\n" +
+                                                "    ],\n" +
+                                                "    \"totalPages\": 5,\n" +
+                                                "    \"totalElements\": 42,\n" +
+                                                "    \"currentPage\": 0\n" +
+                                                "  }\n" +
+                                                "}")
+                                        .summary("게시글 목록 응답 예시"))
+                        .addExamples("게시글 상세 응답 예시",
+                                new Example()
+                                        .value("{\n" +
+                                                "  \"status\": 200,\n" +
+                                                "  \"message\": \"요청이 성공적으로 처리되었습니다.\",\n" +
+                                                "  \"data\": {\n" +
+                                                "    \"id\": 1,\n" +
+                                                "    \"title\": \"첫 번째 게시글입니다\",\n" +
+                                                "    \"content\": \"안녕하세요, 블라인드 커뮤니티 기능 테스트 중입니다. 학과별로 익명성이 보장되는지 확인해봅시다.\",\n" +
+                                                "    \"writerDepartment\": \"컴퓨터공학과\",\n" +
+                                                "    \"writerId\": 1,\n" +
+                                                "    \"category\": \"FREE\",\n" +
+                                                "    \"categoryDisplayName\": \"자유게시판\",\n" +
+                                                "    \"viewCount\": 43,\n" +
+                                                "    \"likeCount\": 15,\n" +
+                                                "    \"dislikeCount\": 3,\n" +
+                                                "    \"createdAt\": \"2025-04-15T14:30:00\",\n" +
+                                                "    \"updatedAt\": \"2025-04-15T15:45:00\",\n" +
+                                                "    \"likeStatus\": \"LIKE\"\n" +
+                                                "  }\n" +
+                                                "}")
+                                        .summary("게시글 상세 응답 예시"))
+                );
     }
 }
