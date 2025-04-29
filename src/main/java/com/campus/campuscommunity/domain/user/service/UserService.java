@@ -190,4 +190,32 @@ public class UserService {
 
         userRepository.delete(user);
     }
+
+    /**
+     * OAuth2 로그인 사용자의 추가 정보 업데이트 (학과 정보 등)
+     * @param email 사용자 이메일
+     * @param department 학과 정보
+     * @return 업데이트된 사용자 정보
+     */
+    @Transactional
+    public UserResponseDto.UserInfo updateOAuthUserInfo(String email, String department) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
+
+        User updatedUser = User.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .name(user.getName())
+                .department(department)
+                .verified(false) // OAuth 사용자도 학생증 인증 필요
+                .role(user.getRole())
+                .providerType(user.getProviderType())
+                .providerId(user.getProviderId())
+                .build();
+
+        User savedUser = userRepository.save(updatedUser);
+
+        return UserResponseDto.UserInfo.from(savedUser);
+    }
 }

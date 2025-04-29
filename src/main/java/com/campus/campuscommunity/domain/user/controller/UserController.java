@@ -188,4 +188,34 @@ public class UserController {
                     .body(ApiResponse.error(ResponseCode.BAD_REQUEST, e.getMessage()));
         }
     }
+
+    /**
+     * OAuth2 로그인 사용자 정보 업데이트 API
+     * PUT /api/users/oauth/info
+     */
+    @Operation(
+            summary = "OAuth 사용자 정보 업데이트",
+            description = "OAuth 로그인 사용자의 학과 정보를 업데이트합니다."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "정보 업데이트 성공",
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.UserInfo.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "사용자 없음"
+            )
+    })
+    @PutMapping("/oauth/info")
+    public ResponseEntity<ApiResponse<UserResponseDto.UserInfo>> updateOAuthUserInfo(
+            @Parameter(description = "사용자 이메일", example = "user@gmail.com", required = true)
+            @RequestParam String email,
+            @Parameter(description = "학과명", example = "컴퓨터공학과", required = true)
+            @RequestParam String department) {
+
+        UserResponseDto.UserInfo userInfo = userService.updateOAuthUserInfo(email, department);
+        return ResponseEntity.ok(ApiResponse.success("학과 정보가 성공적으로 업데이트되었습니다.", userInfo));
+    }
 }

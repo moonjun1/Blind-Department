@@ -2,6 +2,8 @@ package com.campus.campuscommunity.config.security;
 
 import com.campus.campuscommunity.config.jwt.JwtAuthenticationFilter;
 import com.campus.campuscommunity.config.jwt.JwtTokenProvider;
+import com.campus.campuscommunity.config.oauth.CustomOAuth2UserService;
+import com.campus.campuscommunity.config.oauth.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +31,7 @@ public class SecurityConfig {
 
     // 보안 필터 체인 설정
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService, OAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
         return http
                 // CSRF 보호 비활성화 (REST API에서는 일반적으로 필요 없음)
                 .csrf(AbstractHttpConfigurer::disable)
@@ -46,7 +48,13 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/api-docs/**",
                                 "/swagger-resources/**",
-                                "/webjars/**")
+                                "/webjars/**",
+                                "/login/**", // OAuth2 로그인 URL 추가
+                                "/oauth2/**",// OAuth2 콜백 URL 추가
+                                "/", // 루트 경로 허용
+                                "/login-page" // 로그인 페이지 경로 허용
+
+                        )
                         .permitAll()
                         // 회원가입, 로그인은 누구나 접근 가능
                         .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
@@ -54,6 +62,13 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/verify-department/ocr").authenticated()
                         // 그 외 모든 요청은 인증 필요
                         .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                        .successHandler(oAuth2SuccessHandler)
+
                 )
                 // JWT 필터 추가
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
