@@ -39,9 +39,8 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 // 요청에 대한 인가 설정
                 .authorizeHttpRequests(auth -> auth
-                        // 회원가입, 로그인은 누구나 접근 가능
                         .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
-                        // 그 외 모든 요청은 인증 필요
+                        .requestMatchers("/api/users/verify-department/ocr").authenticated()
                         .anyRequest().authenticated()
                 )
                 // JWT 필터 추가
