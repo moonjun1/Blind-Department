@@ -14,7 +14,7 @@ import java.io.IOException;
 @RequiredArgsConstructor // final 필드에 대한 생성자를 자동 생성
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final com.campus.campuscommunity.config.jwt.JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
