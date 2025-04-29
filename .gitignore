@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# API 키 및 민감한 설정
+application-secret.properties
+secrets.properties
+*.env
