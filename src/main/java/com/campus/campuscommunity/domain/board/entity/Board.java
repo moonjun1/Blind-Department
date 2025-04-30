@@ -102,4 +102,19 @@ public class Board {
     public void delete() {
         this.isDeleted = true;
     }
+    // Board 엔티티에 추가된 필드
+    @Builder.Default
+    @Column(nullable = false)
+    private Integer commentCount = 0; // 댓글 수
+
+    // 댓글 수 증가 메서드
+    public void increaseCommentCount() {
+        this.commentCount += 1;
+    }
+
+    // 댓글 수 감소 메서드
+    public void decreaseCommentCount() {
+        this.commentCount = Math.max(0, this.commentCount - 1);
+    }
+
 }
