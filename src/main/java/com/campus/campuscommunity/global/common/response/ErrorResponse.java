@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.common.response;
+package com.campus.campuscommunity.global.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.BindingResult;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

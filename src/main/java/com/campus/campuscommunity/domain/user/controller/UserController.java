@@ -1,7 +1,7 @@
 package com.campus.campuscommunity.domain.user.controller;
 
-import com.campus.campuscommunity.common.response.ApiResponse;
-import com.campus.campuscommunity.common.response.ResponseCode;
+import com.campus.campuscommunity.global.common.response.ApiResponse;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
 import com.campus.campuscommunity.domain.user.dto.UserRequestDto;
 import com.campus.campuscommunity.domain.user.dto.UserResponseDto;
 import com.campus.campuscommunity.domain.user.service.UserService;

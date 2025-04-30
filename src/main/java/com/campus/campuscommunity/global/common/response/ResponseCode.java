@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.common.response;
+package com.campus.campuscommunity.global.common.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

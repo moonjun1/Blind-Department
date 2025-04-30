@@ -1,9 +1,9 @@
-package com.campus.campuscommunity.config.security;
+package com.campus.campuscommunity.global.config.security;
 
-import com.campus.campuscommunity.config.jwt.JwtAuthenticationFilter;
-import com.campus.campuscommunity.config.jwt.JwtTokenProvider;
-import com.campus.campuscommunity.config.oauth.CustomOAuth2UserService;
-import com.campus.campuscommunity.config.oauth.OAuth2SuccessHandler;
+import com.campus.campuscommunity.global.config.jwt.JwtAuthenticationFilter;
+import com.campus.campuscommunity.global.config.jwt.JwtTokenProvider;
+import com.campus.campuscommunity.global.config.oauth.CustomOAuth2UserService;
+import com.campus.campuscommunity.global.config.oauth.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

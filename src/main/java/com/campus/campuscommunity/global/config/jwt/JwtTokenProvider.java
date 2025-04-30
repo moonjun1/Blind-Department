@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.config.jwt;
+package com.campus.campuscommunity.global.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

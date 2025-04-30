@@ -1,7 +1,7 @@
 package com.campus.campuscommunity.domain.board.service;
 
-import com.campus.campuscommunity.common.response.ResponseCode;
-import com.campus.campuscommunity.config.exception.CustomException;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
+import com.campus.campuscommunity.global.config.exception.CustomException;
 import com.campus.campuscommunity.domain.board.dto.BoardRequestDto;
 import com.campus.campuscommunity.domain.board.dto.BoardResponseDto;
 import com.campus.campuscommunity.domain.board.entity.Board;

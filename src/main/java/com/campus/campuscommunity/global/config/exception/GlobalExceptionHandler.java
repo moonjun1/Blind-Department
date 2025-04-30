@@ -1,7 +1,7 @@
-package com.campus.campuscommunity.config.exception;
+package com.campus.campuscommunity.global.config.exception;
 
-import com.campus.campuscommunity.common.response.ErrorResponse;
-import com.campus.campuscommunity.common.response.ResponseCode;
+import com.campus.campuscommunity.global.common.response.ErrorResponse;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

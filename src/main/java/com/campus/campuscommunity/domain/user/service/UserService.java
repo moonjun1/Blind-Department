@@ -1,8 +1,8 @@
 package com.campus.campuscommunity.domain.user.service;
 
-import com.campus.campuscommunity.common.response.ResponseCode;
-import com.campus.campuscommunity.config.exception.CustomException;
-import com.campus.campuscommunity.config.jwt.JwtTokenProvider;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
+import com.campus.campuscommunity.global.config.exception.CustomException;
+import com.campus.campuscommunity.global.config.jwt.JwtTokenProvider;
 import com.campus.campuscommunity.domain.user.dto.UserRequestDto;
 import com.campus.campuscommunity.domain.user.dto.UserResponseDto;
 import com.campus.campuscommunity.domain.user.entity.User;

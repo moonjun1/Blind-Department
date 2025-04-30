@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.config.security;
+package com.campus.campuscommunity.global.config.security;
 
 import com.campus.campuscommunity.domain.user.entity.User;
 import com.campus.campuscommunity.domain.user.repository.UserRepository;

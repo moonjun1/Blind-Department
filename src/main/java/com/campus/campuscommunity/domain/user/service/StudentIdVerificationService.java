@@ -1,6 +1,6 @@
 package com.campus.campuscommunity.domain.user.service;
 
-import com.campus.campuscommunity.config.ocr.GoogleVisionOcrService;
+import com.campus.campuscommunity.global.config.ocr.GoogleVisionOcrService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

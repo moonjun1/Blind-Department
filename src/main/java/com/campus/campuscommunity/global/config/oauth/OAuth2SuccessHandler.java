@@ -1,6 +1,6 @@
-package com.campus.campuscommunity.config.oauth;
+package com.campus.campuscommunity.global.config.oauth;
 
-import com.campus.campuscommunity.config.jwt.JwtTokenProvider;
+import com.campus.campuscommunity.global.config.jwt.JwtTokenProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

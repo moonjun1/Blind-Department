@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.config.oauth;
+package com.campus.campuscommunity.global.config.oauth;
 
 import com.campus.campuscommunity.domain.user.entity.User;
 import com.campus.campuscommunity.domain.user.repository.UserRepository;

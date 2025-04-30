@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.common.response;
+package com.campus.campuscommunity.global.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

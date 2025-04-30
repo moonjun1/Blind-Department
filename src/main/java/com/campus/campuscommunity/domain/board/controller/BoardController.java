@@ -1,6 +1,6 @@
 package com.campus.campuscommunity.domain.board.controller;
 
-import com.campus.campuscommunity.common.response.ApiResponse;
+import com.campus.campuscommunity.global.common.response.ApiResponse;
 import com.campus.campuscommunity.domain.board.dto.BoardRequestDto;
 import com.campus.campuscommunity.domain.board.dto.BoardResponseDto;
 import com.campus.campuscommunity.domain.board.entity.BoardCategory;

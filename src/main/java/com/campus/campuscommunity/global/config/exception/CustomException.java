@@ -1,6 +1,6 @@
-package com.campus.campuscommunity.config.exception;
+package com.campus.campuscommunity.global.config.exception;
 
-import com.campus.campuscommunity.common.response.ResponseCode;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
 import lombok.Getter;
 
 @Getter

@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.config.swagger;
+package com.campus.campuscommunity.global.config.swagger;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

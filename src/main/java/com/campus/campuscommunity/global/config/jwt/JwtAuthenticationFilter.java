@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.config.jwt;
+package com.campus.campuscommunity.global.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.campus.campuscommunity.config.ocr;
+package com.campus.campuscommunity.global.config.ocr;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
