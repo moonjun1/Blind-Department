@@ -51,6 +51,11 @@ public class CommentService {
         // 1. 사용자 정보 조회
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
+        // 학과 인증 여부 확인
+        if (!user.isVerified()) {
+            log.warn("인증되지 않은 사용자의 댓글 작성 시도: 이메일={}", email);
+            throw new CustomException(ResponseCode.DEPARTMENT_NOT_VERIFIED);
+        }
 
         // 2. 게시글 정보 조회
         Board board = boardRepository.findActiveById(request.getBoardId())
@@ -111,6 +116,12 @@ public class CommentService {
         // 2. 사용자 조회
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
+
+        // 학과 인증 여부 확인
+        if (!user.isVerified()) {
+            log.warn("인증되지 않은 사용자의 댓글 수정 시도: 이메일={}, 댓글ID={}", email, commentId);
+            throw new CustomException(ResponseCode.DEPARTMENT_NOT_VERIFIED);
+        }
 
         // 3. 권한 검증
         validateCommentOwnership(comment, user);
@@ -174,6 +185,12 @@ public class CommentService {
         // 2. 사용자 조회
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
+
+        // 학과 인증 여부 확인
+        if (!user.isVerified()) {
+            log.warn("인증되지 않은 사용자의 댓글 좋아요 시도: 이메일={}, 댓글ID={}", email, commentId);
+            throw new CustomException(ResponseCode.DEPARTMENT_NOT_VERIFIED);
+        }
 
         // 3. 좋아요 여부 확인 및 처리
         boolean isLiked = processLikeToggle(comment, user);

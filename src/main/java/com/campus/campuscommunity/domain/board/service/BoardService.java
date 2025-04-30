@@ -47,6 +47,11 @@ public class BoardService {
         // 사용자 정보 조회
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
+        // 학과 인증 여부 확인 - 이 부분 추가
+        if (!user.isVerified()) {
+            log.warn("인증되지 않은 사용자의 게시글 작성 시도: 이메일={}", email);
+            throw new CustomException(ResponseCode.DEPARTMENT_NOT_VERIFIED);
+        }
 
         // 현재 시간 설정
         LocalDateTime now = LocalDateTime.now();
@@ -159,6 +164,12 @@ public class BoardService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
 
+        // 학과 인증 여부 확인
+        if (!user.isVerified()) {
+            log.warn("인증되지 않은 사용자의 게시글 수정 시도: 이메일={}, 게시글ID={}", email, boardId);
+            throw new CustomException(ResponseCode.DEPARTMENT_NOT_VERIFIED);
+        }
+
         // 권한 검증
         validateBoardOwnership(board, user);
 
@@ -213,6 +224,11 @@ public class BoardService {
         // 사용자 조회
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ResponseCode.USER_NOT_FOUND));
+        // 학과 인증 여부 확인
+        if (!user.isVerified()) {
+            log.warn("인증되지 않은 사용자의 게시글 좋아요/싫어요 시도: 이메일={}, 게시글ID={}", email, boardId);
+            throw new CustomException(ResponseCode.DEPARTMENT_NOT_VERIFIED);
+        }
 
         // 현재 좋아요/싫어요 상태 확인
         Optional<BoardLike> boardLikeOpt = boardLikeRepository.findByBoardAndUser(board, user);
