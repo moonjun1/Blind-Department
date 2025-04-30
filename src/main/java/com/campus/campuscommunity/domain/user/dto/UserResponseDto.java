@@ -33,6 +33,9 @@ public class UserResponseDto {
         @Schema(description = "학과 인증 여부", example = "true")
         private boolean verified;
 
+        @Schema(description = "인증 상태 메시지", example = "학과 인증이 완료되었습니다.")
+        private String verificationStatus;
+
         // User 엔티티로부터 UserInfo DTO 생성하는 정적 메서드
         public static UserInfo from(User user) {
             return UserInfo.builder()
