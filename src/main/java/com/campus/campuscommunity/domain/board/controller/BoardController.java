@@ -5,6 +5,8 @@ import com.campus.campuscommunity.domain.board.dto.BoardRequestDto;
 import com.campus.campuscommunity.domain.board.dto.BoardResponseDto;
 import com.campus.campuscommunity.domain.board.entity.BoardCategory;
 import com.campus.campuscommunity.domain.board.service.BoardService;
+import com.campus.campuscommunity.domain.user.dto.UserResponseDto;
+import com.campus.campuscommunity.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/boards")
 @RequiredArgsConstructor
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     private final BoardService boardService;
+    private final UserService userService;
 
     /**
      * 게시글 작성 API
@@ -232,7 +238,7 @@ public class BoardController {
             )
     })
     @GetMapping
-    public ResponseEntity<ApiResponse<BoardResponseDto.BoardListResponse>> getBoardList(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getBoardList(
             @Parameter(description = "검색 키워드", example = "스터디")
             @RequestParam(required = false) String keyword,
             @Parameter(description = "카테고리", example = "FREE", schema = @Schema(implementation = BoardCategory.class))
@@ -244,7 +250,9 @@ public class BoardController {
             @Parameter(description = "페이지 번호 (0부터 시작)", example = "0")
             @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "페이지 크기", example = "10")
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @Parameter(description = "사용자 이메일 (인증 상태 확인용, 선택사항)", example = "user@university.ac.kr")
+            @RequestParam(required = false) String email) {
 
         BoardRequestDto.SearchRequest request = BoardRequestDto.SearchRequest.builder()
                 .keyword(keyword)
@@ -255,7 +263,25 @@ public class BoardController {
                 .size(size)
                 .build();
 
-        BoardResponseDto.BoardListResponse response = boardService.getBoardList(request);
+        BoardResponseDto.BoardListResponse boardListResponse = boardService.getBoardList(request);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("boards", boardListResponse);
+
+        // 이메일이 제공된 경우 인증 상태 추가
+        if (email != null && !email.isEmpty()) {
+            try {
+                UserResponseDto.UserInfo userInfo = userService.getUserInfo(email);
+                Map<String, Object> verificationInfo = new HashMap<>();
+                verificationInfo.put("verified", userInfo.isVerified());
+                verificationInfo.put("status", userInfo.getVerificationStatus());
+                response.put("userVerification", verificationInfo);
+            } catch (Exception e) {
+                // 사용자를 찾을 수 없는 경우 무시
+            }
+        }
+
+
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

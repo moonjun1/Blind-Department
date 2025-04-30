@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -217,5 +220,40 @@ public class UserController {
 
         UserResponseDto.UserInfo userInfo = userService.updateOAuthUserInfo(email, department);
         return ResponseEntity.ok(ApiResponse.success("학과 정보가 성공적으로 업데이트되었습니다.", userInfo));
+    }
+
+    // UserController.java에 메소드 추가
+
+    /**
+     * 사용자 인증 상태 확인 API
+     * GET /api/users/verification-status
+     */
+    @Operation(
+            summary = "학과 인증 상태 확인",
+            description = "현재 로그인한 사용자의 학과 인증 상태를 확인합니다."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "인증 상태 확인 성공"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "사용자 없음"
+            )
+    })
+    @GetMapping("/verification-status")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getVerificationStatus(
+            @Parameter(description = "사용자 이메일", example = "student@university.ac.kr", required = true)
+            @RequestParam String email) {
+
+        UserResponseDto.UserInfo userInfo = userService.getUserInfo(email);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("verified", userInfo.isVerified());
+        response.put("status", userInfo.getVerificationStatus());
+        response.put("department", userInfo.getDepartment());
+
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 }
