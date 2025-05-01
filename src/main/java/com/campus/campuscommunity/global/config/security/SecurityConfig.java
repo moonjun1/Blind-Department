@@ -52,7 +52,8 @@ public class SecurityConfig {
                                 "/login/**", // OAuth2 로그인 URL 추가
                                 "/oauth2/**",// OAuth2 콜백 URL 추가
                                 "/", // 루트 경로 허용
-                                "/login-page" // 로그인 페이지 경로 허용
+                                "/login-page",
+                                "/login-success" // 로그인 페이지 경로 허용
 
                         )
                         .permitAll()
