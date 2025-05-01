@@ -1,7 +1,7 @@
 package com.campus.campuscommunity.domain.comment.service;
 
-import com.campus.campuscommunity.common.response.ResponseCode;
-import com.campus.campuscommunity.config.exception.CustomException;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
+import com.campus.campuscommunity.global.config.exception.CustomException;
 import com.campus.campuscommunity.domain.board.entity.Board;
 import com.campus.campuscommunity.domain.board.repository.BoardRepository;
 import com.campus.campuscommunity.domain.comment.dto.CommentRequestDto;
@@ -12,6 +12,8 @@ import com.campus.campuscommunity.domain.comment.repository.CommentLikeRepositor
 import com.campus.campuscommunity.domain.comment.repository.CommentRepository;
 import com.campus.campuscommunity.domain.user.entity.User;
 import com.campus.campuscommunity.domain.user.repository.UserRepository;
+import com.campus.campuscommunity.global.common.response.ResponseCode;
+import com.campus.campuscommunity.global.config.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
