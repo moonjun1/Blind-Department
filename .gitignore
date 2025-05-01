@@ -40,3 +40,6 @@ out/
 application-secret.properties
 secrets.properties
 *.env
+*.properties
+!application.properties
+application-oauth.properties

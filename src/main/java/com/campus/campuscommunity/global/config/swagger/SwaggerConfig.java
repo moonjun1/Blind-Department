@@ -23,20 +23,6 @@ import java.util.Arrays;
 public class SwaggerConfig {
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .maxAge(3600);
-            }
-        };
-    }
-
-    @Bean
     public OpenAPI openAPI() {
         // 개발 서버 설정
         Server devServer = new Server();
