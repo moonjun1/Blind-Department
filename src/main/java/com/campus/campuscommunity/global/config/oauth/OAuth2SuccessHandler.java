@@ -22,7 +22,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JwtTokenProvider jwtTokenProvider;
 
     // 프론트엔드 리다이렉트 URL (실제 환경에 맞게 설정 필요)
-    private static final String REDIRECT_URI = "http://localhost:3000/oauth2/redirect";
+    private static final String REDIRECT_URI = "http://218.51.41.52.nip.io:9600/login-success";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,

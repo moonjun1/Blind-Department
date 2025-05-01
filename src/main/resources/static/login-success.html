@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 성공</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .token-container {
+            word-break: break-all;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: left;
+            font-family: monospace;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // URL에서 토큰 파라미터 추출
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            // 토큰을 페이지에 표시
+            if (token) {
+                document.getElementById('token').textContent = token;
+            } else {
+                document.getElementById('token').textContent = '토큰이 없습니다.';
+            }
+        };
+    </script>
+</head>
+<body>
+<h1>로그인 성공!</h1>
+<p>Google 계정으로 성공적으로 로그인했습니다.</p>
+<h3>발급된 JWT 토큰:</h3>
+<div class="token-container" id="token"></div>
+<p>이 토큰을 사용하여 API 요청을 인증할 수 있습니다.</p>
+</body>
+</html>

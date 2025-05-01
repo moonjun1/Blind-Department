@@ -1,6 +1,6 @@
 package com.campus.campuscommunity.domain.comment.controller;
 
-import com.campus.campuscommunity.common.response.ApiResponse;
+import com.campus.campuscommunity.global.common.response.ApiResponse;
 import com.campus.campuscommunity.domain.comment.dto.CommentRequestDto;
 import com.campus.campuscommunity.domain.comment.dto.CommentResponseDto;
 import com.campus.campuscommunity.domain.comment.service.CommentService;
