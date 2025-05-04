@@ -23,25 +23,18 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    // 비밀번호 인코더 빈 등록
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // 보안 필터 체인 설정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService, OAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
         return http
-                // CSRF 보호 비활성화 (REST API에서는 일반적으로 필요 없음)
                 .csrf(AbstractHttpConfigurer::disable)
-                // 세션 관리 설정 (JWT 사용하므로 세션은 STATELESS로 설정)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // HTTP 기본 인증 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
-                // 요청에 대한 인가 설정
                 .authorizeHttpRequests(auth -> auth
-                        // Swagger UI 관련 경로 허용
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
@@ -49,18 +42,15 @@ public class SecurityConfig {
                                 "/api-docs/**",
                                 "/swagger-resources/**",
                                 "/webjars/**",
-                                "/login/**", // OAuth2 로그인 URL 추가
-                                "/oauth2/**",// OAuth2 콜백 URL 추가
-                                "/", // 루트 경로 허용
-                                "/login-page" // 로그인 페이지 경로 허용
-
+                                "/login/**",
+                                "/oauth2/**",
+                                "/",
+                                "/api/auth/google/**", // 추가된 엔드포인트
+                                "/api/auth/google/callback" // 추가된 엔드포인트
                         )
                         .permitAll()
-                        // 회원가입, 로그인은 누구나 접근 가능
                         .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
-                        // 학생증 인증은 인증된 사용자만 가능
                         .requestMatchers("/api/users/verify-department/ocr").authenticated()
-                        // 그 외 모든 요청은 인증 필요
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
@@ -68,9 +58,7 @@ public class SecurityConfig {
                                 .userService(customOAuth2UserService)
                         )
                         .successHandler(oAuth2SuccessHandler)
-
                 )
-                // JWT 필터 추가
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
